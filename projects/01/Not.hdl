@@ -13,5 +13,6 @@ CHIP Not {
     OUT out;
 
     PARTS:
-    // Put your code here:
+    // if in = 1, then in the nand gate 1, 1 = 0 in all other cases it is going to be 0 
+    Nand(a=in, b=in, out=out);
 }
