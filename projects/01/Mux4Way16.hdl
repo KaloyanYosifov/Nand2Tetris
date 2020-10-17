@@ -16,5 +16,14 @@ CHIP Mux4Way16 {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Xor(a=sel[0], b=sel[1], out=xorSel);
+    Nand(a=sel[0], b=sel[1], out=nandSel);
+    Not(in=nandSel, out=notNandSel);
+    Mux16(a=a, b=b, sel=xorSel, out=muxAB);
+    Mux16(a=c, b=d, sel=notNandSel, out=muxCD);
+    And(a=sel[0], b=sel[1], out=andSel);
+    Not(in=sel[0], out=notSecondSelBit0);
+    And(a=sel[1], b=notSecondSelBit0, out=andSelNotSecondSelBit);
+    Or(a=andSel, b=andSelNotSecondSelBit, out=orAndSelAndNotSecondSelBit);
+    Mux16(a=muxAB, b=muxCD, sel=orAndSelAndNotSecondSelBit, out=out);
 }
