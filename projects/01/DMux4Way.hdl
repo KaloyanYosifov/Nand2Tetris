@@ -23,8 +23,6 @@ CHIP DMux4Way {
     Not(in=orSel, out=notOrSel);
     And(a=in, b=notOrSel, out=andForFirstDMux);
     And(a=in, b=orSel, out=andForSecondDMux);
-    DMux(in=andForFirstDMux, sel=sel[0], a=aa, b=bb);
-    DMux(in=andForSecondDMux, sel=andSel, a=cc, b=dd);
     DMux(in=andForFirstDMux, sel=sel[0], a=a, b=b);
     DMux(in=andForSecondDMux, sel=andSel, a=c, b=d);
 }
