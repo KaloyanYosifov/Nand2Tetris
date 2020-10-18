@@ -16,13 +16,7 @@ CHIP DMux4Way {
     OUT a, b, c, d;
 
     PARTS:
-    And(a=sel[0], b=sel[1], out=andSel);
-    Not(in=sel[0], out=notFirstSelBit);
-    And(a=sel[1], b=notFirstSelBit, out=andSelNotFirstSelBit);
-    Or(a=andSel, b=andSelNotFirstSelBit, out=orSel);
-    Not(in=orSel, out=notOrSel);
-    And(a=in, b=notOrSel, out=andForFirstDMux);
-    And(a=in, b=orSel, out=andForSecondDMux);
-    DMux(in=andForFirstDMux, sel=sel[0], a=a, b=b);
-    DMux(in=andForSecondDMux, sel=andSel, a=c, b=d);
+    DMux(in=in, sel=sel[1], a=AB, b=CD);
+    DMux(in=AB, sel=sel[0], a=a, b=b);
+    DMux(in=CD, sel=sel[0], a=c, b=d);
 }
