@@ -42,5 +42,15 @@ CHIP ALU {
         ng; // 1 if (out < 0),  0 otherwise
 
     PARTS:
-   // Put you code here:
+    Mux16(a=x, b[0..15]=false, sel=zx, out=ZXGatePassForX);
+    Not16(in=ZXGatePassForX, out=negatedZXGatePassForX);
+    Mux16(a=ZXGatePassForX, b=negatedZXGatePassForX, sel=nx, out=allGatePassForX);
+    Mux16(a=y, b[0..15]=false, sel=zy, out=ZYGatePassForY);
+    Not16(in=ZYGatePassForY, out=negatedZYGatePassForY);
+    Mux16(a=ZYGatePassForY, b=negatedZYGatePassForY, sel=ny, out=allGatePassForY);
+    And16(a=allGatePassForX, b=allGatePassForY, out=andAllGateXY);
+    Add16(a=allGatePassForX, b=allGatePassForY, out=addAllGateXY);
+    Mux16(a=andAllGateXY, b=addAllGateXY, sel=f, out=XYFunction);
+    Not16(in=XYFunction, out=NotXYFunction);
+    Mux16(a=XYFunction, b=NotXYFunction, sel=no, out=out);
 }
