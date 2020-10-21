@@ -52,5 +52,9 @@ CHIP ALU {
     Add16(a=allGatePassForX, b=allGatePassForY, out=addAllGateXY);
     Mux16(a=andAllGateXY, b=addAllGateXY, sel=f, out=XYFunction);
     Not16(in=XYFunction, out=NotXYFunction);
-    Mux16(a=XYFunction, b=NotXYFunction, sel=no, out=out);
+    Mux16(a=XYFunction, b=NotXYFunction, sel=no, out=outputOfXYFunctionMux, out=out);
+    Or16Way(in=outputOfXYFunctionMux, out=orOutput);
+    // if the orOutput is 0 then we know we have a 0 as an output, since all 0's in 16 bit mean a 0
+    // so we just negate that and output it to zr
+    Not(in=orOutput, out=zr);
 }
