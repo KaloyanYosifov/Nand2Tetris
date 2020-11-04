@@ -29,7 +29,7 @@ CHIP Memory {
     PARTS:
     DMux(in=load, sel=address[14], a=load16KIfAnd, b=loadScreen);
     RAM16K(in=in, load=load16KIfAnd, address=address[0..13], out=outRam16k);
-    Screen(in=in, load=loadScreen, address=address[2..14], out=outScreen);
+    Screen(in=in, load=loadScreen, address=address[0..12], out=outScreen);
     Keyboard(out=keyboardOut);
     And(a=address[14], b=address[13], out=keyboardActive);
     Not(in=address[14], out=screenNotActive);
