@@ -1,4 +1,4 @@
-// This file is part of www.nand2tetris.org
+// tHIs FILE is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
 // File name: projects/05/CPU.hdl
@@ -39,5 +39,36 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-    // Put your code here:
+    Mux16(a=instruction, b=aluOut, sel=instruction[15], out=registerAInput);
+    Mux(a=true, b=instruction[5], sel=instruction[15], out=loadRegisterA);
+    ARegister(in=registerAInput, load=loadRegisterA, out=registerAOut, out[0..14]=addressM);
+    Mux(a=false, b=instruction[12], sel=instruction[15], out=shouldUseMemoryOrRegisterABits);
+    Mux16(a=registerAOut, b=inM, sel=shouldUseMemoryOrRegisterABits, out=aRegisterOrMOut);
+    And(a=instruction[4], b=instruction[15], out=loadRegisterD);
+    DRegister(in=aluOut, load=loadRegisterD, out=registerD);
+    And(a=instruction[3], b=instruction[15], out=writeM);
+    ALU(x=registerD, y=aRegisterOrMOut, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], zr=zeroOut, ng=negativeOut, out=aluOut, out=outM);
+    
+    // pc load bit logic
+    Not(in=zeroOut, out=notZeroOut);
+    Not(in=negativeOut, out=notNegativeOut);
+
+    // JGT
+    And(a=instruction[0], b=notZeroOut, out=isGreaterThanZero);
+    And(a=isGreaterThanZero, b=notNegativeOut, out=JGT);
+
+    // JEQ
+    And(a=instruction[1], b=zeroOut, out=isEqualToZero);
+    And(a=isEqualToZero, b=notNegativeOut, out=JEQ);
+
+    // JNE
+    And(a=instruction[2], b=negativeOut, out=JNE);
+
+    // this or affects all posibilities except unconditional jump
+    And3(a=instruction[0], b=instruction[1], c=instruction[2], out=areAllJumpBitsActive);
+    Or4(a=JGT, b=JEQ, c=JNE, d=areAllJumpBitsActive, out=allPossibleJumps);
+
+    Mux(a=false, b=allPossibleJumps, sel=instruction[15], out=shouldLoadInstructionToPCCounter);
+
+    PC(in=registerAOut, load=shouldLoadInstructionToPCCounter, inc=true, reset=reset, out[0..14]=pc);
 }
