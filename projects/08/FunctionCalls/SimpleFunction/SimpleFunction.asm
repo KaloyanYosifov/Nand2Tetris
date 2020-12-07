@@ -5,6 +5,10 @@ D=A
 @0
 M=D
 (SimpleFunction.test)
+@2
+D=A
+@SP
+M=M+D
 // push to stack
 @0
 D=A

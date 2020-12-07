@@ -5,7 +5,7 @@ D=A
 @0
 M=D
 // function called
-@CALLER_RETURN_ADDRESS_3
+@InitializationCode$ret3
 D=A
 
 // set the return address to the current pointer
@@ -71,7 +71,7 @@ M=D
 @Sys.init
 0;JMP
 
-(CALLER_RETURN_ADDRESS_3)
+(InitializationCode$ret3)
 
 (Main.fibonacci)
 // push to stack
@@ -241,7 +241,7 @@ D=M
 A=M-1
 M=M-D
 // function called
-@CALLER_RETURN_ADDRESS_0
+@Main.vm$ret0
 D=A
 
 // set the return address to the current pointer
@@ -308,7 +308,7 @@ M=D
 @Main.fibonacci
 0;JMP
 
-(CALLER_RETURN_ADDRESS_0)
+(Main.vm$ret0)
 
 // push to stack
 @ARG
@@ -336,7 +336,7 @@ D=M
 A=M-1
 M=M-D
 // function called
-@CALLER_RETURN_ADDRESS_1
+@Main.vm$ret1
 D=A
 
 // set the return address to the current pointer
@@ -403,7 +403,7 @@ M=D
 @Main.fibonacci
 0;JMP
 
-(CALLER_RETURN_ADDRESS_1)
+(Main.vm$ret1)
 
 // add algorithmic
 @SP
@@ -497,7 +497,7 @@ M=D
 @SP
 M=M+1
 // function called
-@CALLER_RETURN_ADDRESS_2
+@Sys.vm$ret2
 D=A
 
 // set the return address to the current pointer
@@ -564,7 +564,7 @@ M=D
 @Main.fibonacci
 0;JMP
 
-(CALLER_RETURN_ADDRESS_2)
+(Sys.vm$ret2)
 
 (WHILE)
 // goto

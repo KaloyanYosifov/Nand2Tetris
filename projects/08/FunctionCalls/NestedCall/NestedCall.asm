@@ -5,7 +5,7 @@ D=A
 @0
 M=D
 // function called
-@CALLER_RETURN_ADDRESS_2
+@InitializationCode$ret2
 D=A
 
 // set the return address to the current pointer
@@ -71,7 +71,7 @@ M=D
 @Sys.init
 0;JMP
 
-(CALLER_RETURN_ADDRESS_2)
+(InitializationCode$ret2)
 
 (Sys.init)
 // push to stack
@@ -105,7 +105,7 @@ D=M
 @THAT
 M=D
 // function called
-@CALLER_RETURN_ADDRESS_0
+@Sys.vm$ret0
 D=A
 
 // set the return address to the current pointer
@@ -171,7 +171,7 @@ M=D
 @Sys.main
 0;JMP
 
-(CALLER_RETURN_ADDRESS_0)
+(Sys.vm$ret0)
 
 // pop from stack
 @SP
@@ -407,7 +407,7 @@ M=D
 @SP
 M=M+1
 // function called
-@CALLER_RETURN_ADDRESS_1
+@Sys.vm$ret1
 D=A
 
 // set the return address to the current pointer
@@ -474,7 +474,7 @@ M=D
 @Sys.add12
 0;JMP
 
-(CALLER_RETURN_ADDRESS_1)
+(Sys.vm$ret1)
 
 // pop from stack
 @SP
